@@ -55,35 +55,49 @@ def changePlayer(pl):
     else:
         return "X"
 
-#Create loop (ask player if new game)
-#New board for game
-grid = board.newBoard()
-curr = "X"
-cont = True
-# move(curr, grid)
-#loop instructions for game
-#check ifWinner or smth
+newGame = True
+while(newGame):
+    #Create loop (ask player if new game)
+    #New board for game
+    grid = board.newBoard()
+    curr = "X"
+    cont = True
+    # move(curr, grid)
+    #loop instructions for game
+    #check ifWinner or smth
 
-while(cont):
+    while(cont):
 
-    #make move
-    #makeMove will first get the desired position than board to perform the change
-    
+        #make move
+        #makeMove will first get the desired position than board to perform the change
+        
 
-    #Check for winner
-    lastMove = move(curr, grid)
-    winner = getWinner(grid, lastMove)
-    curr = changePlayer(curr)
-    #crowns winner
-    if winner is not None:
-        print(f"Winner is {winner}")
-        cont = False
-        break
-    full = board.isFull(grid)
-    if full is True:
-        board.boardPrinter(grid)
-        print("Draw")
-        cont = False
-        break
+        #Check for winner
+        lastMove = move(curr, grid)
+        winner = getWinner(grid, lastMove)
+        curr = changePlayer(curr)
+        #crowns winner
+        if winner is not None:
+            print(f"Winner is {winner}")
+            cont = False
+            break
+        full = board.isFull(grid)
+        if full is True:
+            board.boardPrinter(grid)
+            print("Draw")
+            cont = False
+            break
+    invalid = True
+    while(invalid):
+        ans = input("="*30+"\nStart new game [Y/n]: ")
+        if ans != "Y" and ans != "n":
+            print("\n[!] Invalid input. Please enter either Y or n only")
+        else:
+            invalid = False
+            if ans == "Y":
+                newGame = True
+            if ans == "n":
+                newGame = False
+    print("*"*30)
 
 
