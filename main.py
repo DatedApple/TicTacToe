@@ -55,6 +55,10 @@ def changePlayer(pl):
     else:
         return "X"
 
+# main.py
+
+xScore = 0
+oScore = 0
 newGame = True
 while(newGame):
     #Create loop (ask player if new game)
@@ -79,6 +83,11 @@ while(newGame):
         #crowns winner
         if winner is not None:
             print(f"Winner is {winner}")
+            if winner == "X":
+                xScore += 1
+            else:
+                oScore += 1
+            print(f"Score: X = {xScore}, O = {oScore}")
             cont = False
             break
         full = board.isFull(grid)
