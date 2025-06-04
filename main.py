@@ -53,18 +53,20 @@ def aiMove(grid, curr):
     lastMove = mn.bestMove(grid, curr)
     board.placeToken(curr, lastMove, grid)
 
-def interface():
+def start():
     print("*"*31)
     print("*"+" "*29+"*")
     print("*"+" "*9+"TIC TAC TOE"+" "*9+"*")
     print("*"+" "*29+"*")
     print("*"*31)
+    response = int(input("\t 1 player mode OR 2 player mode (1/2):\t"))
+    return True if response == 2 else False
 
 def main():
     xScore = 0
     oScore = 0
     newGame = True
-    twoPlayer = interface()
+    twoPlayer = start()
     while newGame:
         grid = board.newBoard()
         curr = "X"
