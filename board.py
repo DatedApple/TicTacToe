@@ -1,87 +1,47 @@
-def board():
-    a = [[" ", " ", " "],[" ", " ", " "], [" ", " ", " "]]
-    return a
+def create_board():
+    return [[" "] * 3 for _ in range(3)]
 
 def locator():
-    x = 0
-    b = board()
-    for i in range(3):
-        a = b[i]
-        for j in range(3):
-            a[j] = f"{x}"
-            x+=1
-        b[i] = a
+    b = [[str(i * 3 + j) for j in range(3)] for i in range(3)]
     boardPrinter(b)
 
 
 def boardPrinter(brd):
-    start = True
-    for x in brd:
-        if start is False:
-            print("-----")
-        print("|".join(x))
-        start = False
+    for idx, row in enumerate(brd):
+        print("|".join(row))
+        if idx < 2:
+            print("-" * 5)
         
 
 def newBoard():
-    newBoard = board()
-    print("new game beggining...")
-    # boardPrinter(newBoard)
-    return newBoard
+    print("new game beginning...")
+    return create_board()
 
 def placeToken(player, coords, brd):
-    i = int(coords/3)
-    j = coords%3
+    i, j = divmod(coords, 3)
     brd[i][j] = player
 
 def isFull(brd):
-    for x in brd:
-        # print("Checking row")
-        for y in x:
-            # print(y)
-            if y == " ":
-                return False
+    for row in brd:
+        if " " in row:
+            return False
     print("Board is full")
     return True
 
 def checkLine(b, p, x):
-    for cell in b[x]:
-        if cell != p:
-            return False
-    return True
+    return all(cell == p for cell in b[x])
 
 def checkRow(b, p, y):
-    for x in range(3):
-        if b[x][y] != p:
-            return False
-    return True
+    return all(b[x][y] == p for x in range(3))
 
 def checkDiagonal(b, p, x, y):
-    leftie = False
-    rightie = False
-    if x == y:
-        leftie = True
-        for i in range(3):
-            # print(b[i][i])
-            if b[i][i] != p:
-                leftie = False
-                break
-    if x+y==2:
-        rightie = True
-        for i in range(3):
-            if b[i][2-i] != p:
-                rightie = False
-                break
+    leftie = x == y and all(b[i][i] == p for i in range(3))
+    rightie = x + y == 2 and all(b[i][2 - i] == p for i in range(3))
     return leftie or rightie
 def checkGame(brd, x, y):
     curr = brd[x][y]
-    line = checkLine(brd, curr, x)
-    # print(f"line: {line}")
-    row = checkRow(brd, curr, y)
-    # print(f"row: {row}")
-    diagonal = checkDiagonal(brd, curr, x, y)
-    # print(f"diag: {diagonal}")
-    if line or row or diagonal:
-        return curr
-    else:
+    if curr == " ":
         return None
+    if checkLine(brd, curr, x) or checkRow(brd, curr, y) or checkDiagonal(brd, curr, x, y):
+        return curr
+    return None
