@@ -1,4 +1,4 @@
-import copy
+#import copy
 import board
 
 def bestMove(board, current):
@@ -16,4 +16,4 @@ def bestMove(board, current):
     return placement[0] * 3 + placement[1]
 
 def minmax(board, curr):
-    return int(-1e9)
+    return 1

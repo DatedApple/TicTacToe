@@ -53,11 +53,18 @@ def aiMove(grid, curr):
     lastMove = mn.bestMove(grid, curr)
     board.placeToken(curr, lastMove, grid)
 
+def interface():
+    print("*"*31)
+    print("*"+" "*29+"*")
+    print("*"+" "*9+"TIC TAC TOE"+" "*9+"*")
+    print("*"+" "*29+"*")
+    print("*"*31)
+
 def main():
     xScore = 0
     oScore = 0
     newGame = True
-    twoPlayer = True
+    twoPlayer = interface()
     while newGame:
         grid = board.newBoard()
         curr = "X"
@@ -93,6 +100,7 @@ def main():
                 newGame = (ans == "Y")
                 break
         print("*"*30)
+        print(f"\tFinal score\nO:{oScore}\tX:{xScore}\n"+"="*30+"\tEnding game...")
 
 if __name__ == "__main__":
     main()
