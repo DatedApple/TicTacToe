@@ -10,7 +10,7 @@ def is_invalid_move(grid, coord):
         print("\n[!] Out of bounds: Please select a number from 0 to 8.\n")
         return True
     i, j = divmod(coord, 3)
-    if grid[i][j] == " ":
+    if grid.board[i][j] == " ":
         return False
     print("\n[!] That space is already taken. Please choose another.\n")
     return True
@@ -20,7 +20,7 @@ def getMove(grid):
     while True:
         print("\n" + "="*30)
         print("Select a space using the number shown below:")
-        board.locator()
+        grid.locator()
         print()
         try:
             c = int(input("\u25B6 Enter your move (0-8): "))
@@ -34,14 +34,14 @@ def getMove(grid):
 def move(curr, grid):
     print(f"\n{'*'*10} Player {curr}'s Turn {'*'*10}")
     coords = getMove(grid)
-    board.placeToken(curr, coords, grid)
+    grid.placeToken(curr, coords)
     print("\nCurrent Board:")
-    board.boardPrinter(grid)
+    grid.boardPrinter()
     return coords
 
 def getWinner(b, c):
     x, y = divmod(c, 3)
-    return board.checkGame(b, x, y)
+    return b.checkGame(x, y)
 
 def changePlayer(pl):
     print("-"*20)
@@ -51,7 +51,7 @@ def changePlayer(pl):
 
 def aiMove(grid, curr):
     lastMove = mn.bestMove(grid, curr)
-    board.placeToken(curr, lastMove, grid)
+    grid.placeToken(curr, lastMove)
 
 def start():
     print("*"*31)
@@ -68,7 +68,7 @@ def main():
     newGame = True
     twoPlayer = start()
     while newGame:
-        grid = board.newBoard()
+        grid = board.Board()
         curr = "X"
         cont = True
         lastMove = None
@@ -89,8 +89,8 @@ def main():
                 print(f"Score: X = {xScore}, O = {oScore}")
                 cont = False
                 break
-            if board.isFull(grid):
-                board.boardPrinter(grid)
+            if grid.isFull():
+                grid.boardPrinter()
                 print("Draw")
                 cont = False
                 break
